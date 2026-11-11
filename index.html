@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registro de Observação · Espaço Montessoriano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--base:#faf7f2;--acolh:#f0e7da;--pet:#0f4c45;--prof:#082f2c;--verde:#55c1a2;--vesc:#176b58;--vten:#d4efe6;--tinta:#1e2a28;--suave:#4e5c59;--dour:#7d5f2c;--linha:#dcd2c4;--forte:#92806a;--A:#176b58;--EP:#b07a1f;--AP:#b4475f;--NO:#7a7f7d}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Source Sans 3',Arial,sans-serif;background:var(--base);color:var(--tinta);font-size:16px;line-height:1.45;min-height:100vh}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font:inherit;color:inherit}
+header{background:var(--pet);color:var(--base);padding:14px 20px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:10}
+header h1{font-family:'Newsreader',Georgia,serif;font-weight:300;font-size:22px;flex:1;line-height:1.15}
+header h1 small{display:block;font-family:'Source Sans 3';font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--verde);font-weight:600}
+.back{font-size:22px;padding:4px 10px;border-radius:8px}
+.back:hover{background:rgba(255,255,255,.1)}
+main{max-width:980px;margin:0 auto;padding:20px 16px 100px}
+.card{background:#fff;border:1px solid var(--linha);border-radius:12px;padding:18px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{background:var(--pet);color:var(--base);padding:10px 16px;border-radius:10px;font-weight:600}
+.btn:hover{background:var(--prof)}
+.btn.sec{background:var(--acolh);color:var(--pet)}
+.btn.sec:hover{background:#e6d9c6}
+.btn.ghost{background:transparent;color:var(--vesc);border:1px solid var(--linha)}
+.btn.danger{background:transparent;color:var(--AP);border:1px solid #e8c4cd}
+.field{display:flex;flex-direction:column;gap:4px;flex:1;min-width:180px}
+.field label{font-size:13px;font-weight:600;color:var(--suave)}
+.field input,.field select,textarea{border:1px solid var(--linha);border-radius:8px;padding:10px 12px;background:#fff}
+.field input:focus,.field select:focus,textarea:focus{outline:2px solid var(--verde);border-color:var(--verde)}
+h2{font-family:'Newsreader',Georgia,serif;font-weight:300;font-size:30px;color:var(--pet);line-height:1.15}
+h3{font-size:15px;font-weight:700;color:var(--pet)}
+.eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--vesc);font-weight:700}
+.muted{color:var(--suave);font-size:14px}
+.stack{display:flex;flex-direction:column;gap:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.child{display:flex;flex-direction:column;gap:10px;text-align:left;transition:transform .1s}
+.child:hover{border-color:var(--verde);transform:translateY(-1px)}
+.child .nome{font-family:'Newsreader',Georgia,serif;font-size:22px;color:var(--pet)}
+.bar{height:8px;background:var(--acolh);border-radius:6px;overflow:hidden;display:flex}
+.bar span{display:block;height:100%}
+.pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{font-size:12px;font-weight:700;padding:2px 8px;border-radius:20px;color:#fff}
+.pA{background:var(--A)}.pEP{background:var(--EP)}.pAP{background:var(--AP)}.pNO{background:var(--NO)}
+.filter{display:flex;gap:6px;flex-wrap:wrap}
+.chip{padding:6px 12px;border-radius:20px;border:1px solid var(--linha);background:#fff;font-size:14px;font-weight:600;color:var(--suave)}
+.chip.on{background:var(--pet);color:var(--base);border-color:var(--pet)}
+.tabs{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--linha);margin:0 -16px;padding:0 16px;scrollbar-width:none}
+.tabs button{padding:10px 14px;font-weight:600;color:var(--suave);border-bottom:3px solid transparent;white-space:nowrap}
+.tabs button.on{color:var(--pet);border-color:var(--verde)}
+.campo{display:flex;flex-direction:column;gap:0}
+.campo-h{display:flex;justify-content:space-between;align-items:center;padding:14px 0 8px;gap:10px}
+.item{background:#fff;border:1px solid var(--linha);border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;flex-direction:column;gap:8px}
+.item-top{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.item-txt{flex:1;min-width:200px}
+.item-txt .cod{font-size:12px;color:var(--dour);font-weight:600;margin-top:2px}
+.seg{display:flex;border:1px solid var(--linha);border-radius:8px;overflow:hidden;flex-shrink:0}
+.seg button{padding:8px 0;width:46px;font-size:13px;font-weight:700;color:var(--suave);border-left:1px solid var(--linha)}
+.seg button:first-child{border-left:none}
+.seg button.on[data-v=A]{background:var(--A);color:#fff}
+.seg button.on[data-v=EP]{background:var(--EP);color:#fff}
+.seg button.on[data-v=AP]{background:var(--AP);color:#fff}
+.seg button.on[data-v=NO]{background:var(--NO);color:#fff}
+.note{display:flex;gap:8px;align-items:flex-start}
+.note textarea{flex:1;min-height:40px;resize:vertical;font-size:14px}
+.addnote{font-size:13px;color:var(--vesc);font-weight:600;align-self:flex-start}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.legend div{border-left:4px solid;padding:8px 12px;background:#fff;border-radius:0 8px 8px 0;font-size:14px}
+.bloco{border-left:5px solid;padding:16px 18px;background:#fff;border-radius:0 12px 12px 0;display:flex;flex-direction:column;gap:10px}
+.bloco textarea{min-height:170px;width:100%;line-height:1.55;font-size:15px}
+.fab{position:fixed;right:20px;bottom:20px;box-shadow:0 6px 20px rgba(8,47,44,.25);border-radius:30px;padding:14px 22px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--prof);color:#fff;padding:10px 18px;border-radius:24px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}
+.toast.show{opacity:1}
+.modal{position:fixed;inset:0;background:rgba(8,47,44,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:40}
+.modal .card{max-width:480px;width:100%;display:flex;flex-direction:column;gap:14px}
+table.g{border-collapse:collapse;width:100%;font-size:14px}
+table.g th{background:var(--pet);color:#fff;text-align:left;padding:8px 10px}
+table.g td{padding:8px 10px;border-bottom:1px solid var(--linha);vertical-align:top}
+table.g tr:nth-child(even) td{background:var(--acolh)}
+.empty{text-align:center;padding:40px 20px;color:var(--suave)}
+footer{font-size:12px;color:var(--suave);text-align:center;padding:24px 16px}
+@media print{header,.noprint,.fab,.tabs{display:none!important}body{background:#fff}main{padding:0}.bloco{border:none;padding:0 0 14px}.bloco textarea{border:none;min-height:0;height:auto;overflow:visible}}
+</style>
+</head>
+<body>
+<header>
+<button class="back noprint" id="back" aria-label="Voltar" style="display:none">←</button>
+<h1><small>Espaço Montessoriano</small><span id="title">Registro de Observação</span></h1>
+<span id="sync" class="noprint" style="font-size:12px;color:var(--verde);text-align:right;line-height:1.2;max-width:110px"></span>
+<button class="btn sec noprint" id="lockBtn" style="padding:8px 12px;display:none" title="Bloquear">🔒</button>
+<button class="btn sec noprint" id="guiaBtn" style="padding:8px 12px">Guia</button>
+</header>
+<main id="app"></main>
+<div class="toast" id="toast"></div>
+<footer class="noprint">Espaço Montessoriano Vanessa Oliveira · @espaco.montessoriano · @vsoliveira16<br><span id="footnote">Os registros ficam salvos neste aparelho e navegador. Use “Exportar backup” para guardar ou levar a outro aparelho.</span></footer>
+<script>
+const T={
+"IIM":{nome:"II Maternal",sub:"Maternal 1 e 2 · 1 ano e meio a 3 anos · EI02",proxima:"Maternal 3",campos:[
+["O eu, o outro e o nós",[["Separa-se da família e se reorganiza com apoio do vínculo","EI02EO01"],["Demonstra interesse pelos colegas e brinca ao lado ou junto","EI02EO03"],["Comunica vontades e sentimentos com gestos ou palavras","EI02EO04"],["Espera a vez e aguarda o material ficar livre","EI02EO06"],["Usa gestos de cortesia (por favor, obrigado, licença)","EI02EO06"],["Resolve pequenos conflitos com palavras e mediação do adulto","EI02EO07"]]],
+["Corpo, gestos e movimentos",[["Anda, corre, sobe e desce degraus com segurança","EI02CG01, 02"],["Carrega cadeira, bandeja e materiais com cuidado","EI02CG02"],["Caminha sobre a Linha","EI02CG02"],["Usa a pinça e transfere com colher ou pinça","EI02CG05"],["Lava as mãos, come sozinha e serve água","EI02CG04"],["Tira e coloca peças simples de roupa e calçados","EI02CG04"],["Está em processo de desfralde (descrever sem tom de cobrança)","EI02CG04"]]],
+["Traços, sons, cores e formas",[["Explora giz, tinta, pincel e massinha","EI02TS02"],["Faz marcas gráficas com intenção","EI02TS02"],["Acompanha canções com gestos e canta trechos","EI02TS01, 03"],["Explora sons com instrumentos e objetos","EI02TS03"]]],
+["Escuta, fala, pensamento e imaginação",[["Compreende comandos simples do cotidiano","EI02EF01"],["Nomeia objetos e pessoas do ambiente","EI02EF01"],["Combina palavras em frases (2 a 4 palavras)","EI02EF01"],["Faz perguntas e conta o que fez","EI02EF04, 05"],["Manuseia livros e acompanha histórias curtas","EI02EF03, 08"],["Reconhece o próprio nome falado (e escrito, no Maternal 2)","EI02EF09"]]],
+["Espaços, tempos, quantidades, relações e transformações",[["Explora texturas, pesos e tamanhos","EI02ET01"],["Repete trabalhos de causa e efeito","EI02ET02"],["Emparelha e classifica por cor ou forma","EI02ET05"],["Usa noções de dentro, fora, em cima, embaixo","EI02ET04"],["Cuida de plantas e observa a natureza","EI02ET03"],["Antecipa os momentos da rotina","EI02ET04"],["Recita números em contagem oral","EI02ET07"]]],
+["Olhar montessoriano",[["Escolhe um material por iniciativa própria","Livre escolha"],["Permanece no trabalho e repete","Ciclo de trabalho"],["Devolve o material à estante","Ordem"],["Reconhece o lugar dos objetos e se organiza pela rotina","Período sensível da ordem"],["Aprende observando os maiores (ou ajuda os menores)","Agrupamento multietário"],["Avança na lição dos três períodos (anotar em qual está)","Lição dos três períodos"]]]]},
+"IIIM":{nome:"III Maternal",sub:"2 anos e meio a 4 anos · EI02 → EI03",proxima:"I Jardim",campos:[
+["O eu, o outro e o nós",[["Usa cortesia espontaneamente","EI02EO06"],["Respeita o trabalho do colega e observa sem interferir","EI02EO03"],["Espera a vez com pouca mediação","EI02EO06"],["Expressa sentimentos e necessidades com palavras","EI02EO04"],["Resolve conflitos com palavras (“eu estava usando”)","EI02EO07"],["Participa de combinados e brincadeiras com os colegas","EI02EO02, 05"]]],
+["Corpo, gestos e movimentos",[["Realiza sequências completas de Vida Prática (lavar a mesa, varrer)","EI02CG04"],["Abotoa e fecha velcro e zíper nas próprias roupas","EI02CG05"],["Carrega materiais grandes com controle","EI02CG02"],["Corta banana, serve-se e cuida de si com autonomia","EI02CG04"],["Usa a pinça com precisão","EI02CG05"],["Coordena movimentos amplos (correr, pular, equilibrar-se na Linha)","EI02CG01"]]],
+["Traços, sons, cores e formas",[["Desenha com intenção e nomeia o que fez","EI02TS02"],["Escolhe e nomeia cores","EI02TS02"],["Acompanha ritmos com instrumentos","EI02TS03"],["Canta canções do grupo","EI02TS01"]]],
+["Escuta, fala, pensamento e imaginação",[["Usa frases de quatro ou mais palavras","EI02EF01"],["Reconta acontecimentos com sequência","EI02EF04, 06"],["Faz perguntas (“por quê?”) e participa de conversas","EI02EF01"],["Usa vocabulário de comparação (maior, mais fino, mais escuro)","EI02EF01"],["Percebe o som inicial em brincadeiras orais (“Eu vejo”)","EI02EF02"],["Reconhece o próprio nome escrito","EI02EF09"]]],
+["Espaços, tempos, quantidades, relações e transformações",[["Ordena objetos por tamanho e espessura","EI02ET05"],["Constrói sequências do maior para o menor","EI02ET05"],["Emparelha e nomeia cores","EI02ET05"],["Classifica por mais de um atributo","EI02ET05"],["Conta até 5 com correspondência termo a termo","EI02ET07, 08"],["Observa plantas, animais e transformações (água, terra)","EI02ET02, 03"]]],
+["Olhar montessoriano",[["Concentra-se de 10 a 20 minutos em um trabalho escolhido","Ciclo de trabalho"],["Percebe e corrige o próprio erro pelo material","Controle do erro"],["Repete com propósito","Repetição"],["Mostra-se calma e disponível após o trabalho","Normalização"],["Avança na lição dos três períodos com o vocabulário sensorial","Lição dos três períodos"]]]]},
+"IJ":{nome:"I Jardim",sub:"3 anos e meio a 5 anos · EI03",proxima:"II Jardim",campos:[
+["O eu, o outro e o nós",[["Demonstra empatia e cuidado com os colegas","EI03EO01"],["Age com confiança e autonomia nas escolhas","EI03EO02"],["Coopera em dupla ou pequeno grupo","EI03EO03"],["Comunica ideias e sentimentos com clareza","EI03EO04"],["Respeita combinados e o trabalho alheio","EI03EO07"],["Resolve conflitos com palavras e pouca mediação","EI03EO07"]]],
+["Corpo, gestos e movimentos",[["Controla o movimento em atividades que exigem precisão","EI03CG02"],["Realiza sequências longas de Vida Prática","EI03CG04"],["Amarra e abotoa com autonomia","EI03CG05"],["Segura o lápis em pinça (três dedos)","EI03CG05"],["Contorna e preenche formas com traço controlado","EI03CG05"],["Recorta com tesoura linhas retas e curvas","EI03CG05"]]],
+["Traços, sons, cores e formas",[["Desenha figura humana com várias partes","EI03TS02"],["Cria produções artísticas com diferentes materiais","EI03TS02"],["Reconhece e reproduz ritmos e sons","EI03TS01, 03"],["Participa de dramatizações e brincadeiras cantadas","EI03TS01"]]],
+["Escuta, fala, pensamento e imaginação",[["Identifica som inicial e final das palavras","EI03EF02"],["Percebe rimas","EI03EF02"],["Associa som e símbolo das letras (anotar quais)","EI03EF09"],["Reconta histórias com início, meio e fim","EI03EF04, 06"],["Escreve o próprio nome","EI03EF09"],["Forma palavras a partir dos sons, com letras soltas","EI03EF09"]]],
+["Espaços, tempos, quantidades, relações e transformações",[["Associa quantidade e símbolo até 10","EI03ET07"],["Compreende a ideia de zero","EI03ET07"],["Faz correspondência termo a termo e compara quantidades","EI03ET07, 08"],["Combina materiais sensoriais em várias dimensões","EI03ET05"],["Explora o globo terrestre, as partes da planta e os animais","EI03ET01, 02"],["Situa acontecimentos no tempo (ontem, hoje, amanhã)","EI03ET04, 06"]]],
+["Olhar montessoriano",[["Concentra-se de 20 a 30 minutos","Ciclo de trabalho"],["Escolhe trabalhos desafiadores, e não só os conhecidos","Livre escolha"],["Corrige-se pelo controle do erro","Controle do erro"],["Ajuda os menores e apresenta materiais a eles","Agrupamento multietário"],["Mostra-se calma e disponível após o trabalho","Normalização"]]]]},
+"IIJ":{nome:"II Jardim",sub:"4 anos e meio a 6 anos · EI03 → Ensino Fundamental",proxima:"1º ano",campos:[
+["O eu, o outro e o nós",[["Assume responsabilidades no grupo (cuidar da sala, ajudar os menores)","EI03EO03"],["Coopera e negocia em trabalhos de grupo","EI03EO03"],["Expressa opiniões e respeita pontos de vista diferentes","EI03EO04, 06"],["Resolve conflitos com autonomia","EI03EO07"],["Lida com frustrações e desafios com persistência","EI03EO02"]]],
+["Corpo, gestos e movimentos",[["Traça letras e números com controle","EI03CG05"],["Escreve respeitando a linha e o espaço da folha","EI03CG05"],["Usa tesoura, cola e materiais de arte com precisão","EI03CG05"],["Coordena movimentos amplos em jogos com regras","EI03CG01, 03"],["Cuida de si e dos pertences com autonomia","EI03CG04"]]],
+["Traços, sons, cores e formas",[["Produz desenhos com detalhes e narrativa","EI03TS02"],["Cria e reproduz sequências rítmicas","EI03TS03"],["Aprecia e comenta obras de arte e músicas","EI03TS01"]]],
+["Escuta, fala, pensamento e imaginação",[["Associa som e símbolo de todas as letras","EI03EF09"],["Compõe palavras e frases a partir dos sons","EI03EF09"],["Lê palavras fonéticas simples e cartões de leitura","EI03EF08"],["Escreve palavras e pequenas frases com escrita espontânea","EI03EF09"],["Reconta e cria histórias com coerência","EI03EF04, 05"],["Avança na hipótese de escrita (anotar em qual está)","EI03EF09"]]],
+["Espaços, tempos, quantidades, relações e transformações",[["Reconhece quantidades e numerais além de 10","EI03ET07"],["Compreende o sistema de numeração decimal com material concreto","EI03ET07, 08"],["Realiza adições simples com material concreto","EI03ET08"],["Registra quantidades e compara medidas","EI03ET07, 08"],["Formula perguntas e hipóteses sobre a natureza e o mundo","EI03ET01, 02"],["Usa o calendário, os dias da semana e os meses","EI03ET06"]]],
+["Olhar montessoriano",[["Concentra-se por longos períodos e conclui o que inicia","Ciclo de trabalho"],["Planeja o próprio trabalho do dia","Autonomia"],["É referência para os menores e apresenta materiais","Agrupamento multietário"],["Passa do concreto para o registro","Do concreto ao abstrato"],["Mostra disciplina interior e cuidado com o ambiente","Normalização"]]]]},
+"1A":{nome:"1º ano",sub:"5 anos e meio a 7 anos · Ensino Fundamental",proxima:"2º ano",campos:[
+["Língua Portuguesa",[["Reconhece e nomeia as letras do alfabeto","EF01LP04, 10"],["Segmenta palavras oralmente em sílabas","EF01LP06"],["Relaciona fonemas e letras","EF01LP07, 08"],["Escreve palavras e frases de forma espontânea ou ditada","EF01LP02"],["Separa as palavras com espaços na escrita","EF01LP12"],["Conhece letra de imprensa e cursiva, maiúscula e minúscula","EF01LP11"],["Lê palavras e pequenos textos com autonomia crescente","EF12LP01"],["Expressa-se oralmente com clareza e reconta histórias","EF15LP09, 19"],["Avança na hipótese de escrita (anotar em qual está)","EF01LP05"]]],
+["Matemática",[["Conta objetos até 100 e compara quantidades","EF01MA02, 04, 05"],["Compõe e decompõe números em dezenas e unidades","EF01MA07"],["Constrói fatos básicos da adição","EF01MA06"],["Resolve problemas simples de adição e subtração","EF01MA08"],["Reconhece sequências e padrões","EF01MA09, 10"],["Reconhece figuras geométricas planas e espaciais","EF01MA13, 14"],["Compara medidas e usa o calendário","EF01MA15, 16, 17"],["Reconhece cédulas e moedas","EF01MA19"],["Lê tabelas e gráficos simples","EF01MA21"]]],
+["Ciências, História e Geografia",[["Identifica partes do corpo e hábitos de cuidado e higiene","EF01CI02, 03"],["Observa materiais, seres vivos e ciclos (dia e noite)","EF01CI01, 05"],["Reconhece a própria história e a da família","EF01HI01, 02"],["Descreve os lugares de vivência (casa, escola, bairro)","EF01GE01"],["Faz perguntas e pesquisa a partir das Grandes Lições","Educação Cósmica"]]],
+["Arte e Educação Física",[["Cria e comenta produções visuais, musicais e cênicas","EF15AR"],["Participa de brincadeiras e jogos respeitando regras","EF12EF01, 02"]]],
+["Socioemocional e olhar montessoriano",[["Organiza o próprio trabalho e conclui o que inicia","Ciclo de trabalho"],["Usa registros (caderno, planejamento) com autonomia","Autonomia"],["Trabalha em grupo, negocia e respeita diferenças","Competências gerais 9 e 10"],["Lida com o erro como parte da aprendizagem","Controle do erro"],["Demonstra curiosidade, imaginação e senso de justiça","Segundo plano de desenvolvimento"]]]]}
+};
+const ORDEM=["IIM","IIIM","IJ","IIJ","1A"];
+const LBL={A:"Alcançado",EP:"Em processo",AP:"A aprimorar",NO:"Não observado"};
+const KEY="em-registro-v1";
+let DB={criancas:[]};
+try{const s=localStorage.getItem(KEY);if(s)DB=JSON.parse(s)}catch(e){}
+function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){if(!NUVEM.on)toast("Não foi possível salvar neste navegador. Exporte um backup.")}}
+function save(){saveLocal();agendarNuvem()}
+const NUVEM={on:false,ref:null,db:null,user:null,uid:null,timer:null,gravando:false,pendente:false,coord:false};
+function status(t,cor){const e=document.getElementById("sync");if(e){e.textContent=t;e.style.color=cor||"var(--verde)"}}
+function agendarNuvem(){if(!NUVEM.ref)return;clearTimeout(NUVEM.timer);status("Salvando…","#f0e7da");NUVEM.timer=setTimeout(gravarNuvem,1200)}
+async function gravarNuvem(){if(!NUVEM.ref)return;if(NUVEM.gravando){NUVEM.pendente=true;return}
+ NUVEM.gravando=true;
+ try{await NUVEM.ref.set({criancas:JSON.parse(JSON.stringify(DB.criancas)),atualizado:new Date().toISOString()});NUVEM.on=true;status("☁ Salvo na nuvem");
+  const f=document.getElementById("footnote");if(f)f.textContent="Os registros ficam salvos na sua conta e aparecem em qualquer aparelho em que você abrir este link.";}
+ catch(e){if(e&&e.code==="unavailable"){setTimeout(gravarNuvem,1500+Math.random()*1000)}
+  else{NUVEM.ref=null;NUVEM.on=false;status("Salvo só neste aparelho","#eeae69");if(e&&e.code==="quota_exceeded")toast("Espaço na nuvem esgotado. Exporte um backup.")}}
+ finally{NUVEM.gravando=false;if(NUVEM.pendente){NUVEM.pendente=false;gravarNuvem()}}}
+function comTempo(pr,ms){return Promise.race([pr,new Promise((_,r)=>setTimeout(()=>r({code:"timeout"}),ms))])}
+async function iniciarNuvem(){
+ try{if(!window.claude||!window.claude.use){status("Salvo neste aparelho","#eeae69");return}
+  const [db,user]=await Promise.all([window.claude.use("db"),window.claude.use("user")]);
+  if(!db||!user){status("Salvo neste aparelho","#eeae69");return}
+  const uid=await user.id();if(!uid){status("Salvo neste aparelho","#eeae69");return}
+  Object.assign(NUVEM,{db,user,uid});
+  NUVEM.coord=await user.isOwner();
+  const ref=db.doc("professoras/"+uid);
+  status("Conectando…","#f0e7da");
+  const snap=await comTempo(ref.get(),10000);
+  NUVEM.ref=ref;
+  const remoto=snap.exists&&Array.isArray((snap.data()||{}).criancas)?snap.data().criancas:null;
+  if(remoto){const ids=new Set(remoto.map(c=>c.id));const soLocal=DB.criancas.filter(c=>!ids.has(c.id));
+   DB.criancas=remoto.map(c=>JSON.parse(JSON.stringify(c))).concat(soLocal);saveLocal();
+   if(soLocal.length)await gravarNuvem();else{NUVEM.on=true;status("☁ Salvo na nuvem")}}
+  else await gravarNuvem();
+  if(NUVEM.on){const f=document.getElementById("footnote");if(f)f.textContent="Os registros ficam salvos na sua conta e aparecem em qualquer aparelho em que você abrir este link."}
+  if(view.tela==="home")render();else if((view.tela==="ficha"||view.tela==="relatorio")&&!crianca())go({tela:"home"});
+ }catch(e){NUVEM.ref=null;status("Salvo neste aparelho","#eeae69")}}
+let view={tela:"home",filtro:"todas",id:null,aba:0};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2200)}
+function itens(t){const r=[];T[t].campos.forEach((c,ci)=>c[1].forEach((it,ii)=>r.push({k:ci+"-"+ii,campo:c[0],txt:it[0],cod:it[1]})));return r}
+function contar(c){const n={A:0,EP:0,AP:0,NO:0,vazio:0};itens(c.turma).forEach(i=>{const v=(c.marcas||{})[i.k];if(v)n[v]++;else n.vazio++});n.total=itens(c.turma).length;return n}
+function barra(n){return `<div class="bar">${["A","EP","AP","NO"].map(v=>`<span style="width:${n[v]/n.total*100}%;background:var(--${v})"></span>`).join("")}</div>`}
+function crianca(){if(view.ext)return view.ext;return DB.criancas.find(c=>c.id===view.id)}
+function go(v){if(!("ext" in v)&&v.tela&&v.tela!=="relatorio")view.ext=null;Object.assign(view,v);render();window.scrollTo(0,0)}
+
+const PKEY="em-pin-v1";let BLOQ=true,tentativas=0,esperaAte=0,ultimo=Date.now();
+function pinCfg(){try{return JSON.parse(localStorage.getItem(PKEY)||"null")}catch(e){return null}}
+function telaPin(app){
+ const cfg=pinCfg();const criar=!cfg;
+ $("#title").textContent="Registro de Observação";$("#back").style.display="none";
+ app.innerHTML=`<div class="card stack" style="max-width:380px;margin:40px auto;text-align:center;align-items:center">
+ <p class="eyebrow">${criar?"Primeiro acesso neste aparelho":"App bloqueado"}</p>
+ <h2>${criar?"Crie um PIN de 4 dígitos":"Digite seu PIN"}</h2>
+ <p class="muted">${criar?"O PIN protege as fichas das crianças neste aparelho. O app bloqueia sozinho depois de alguns minutos sem uso.":"Para proteger os dados das crianças, o app pede o PIN ao abrir e após alguns minutos sem uso."}</p>
+ <input id="pin1" inputmode="numeric" type="password" maxlength="4" autocomplete="off" style="font-size:32px;letter-spacing:16px;text-align:center;width:200px;border:1px solid var(--linha);border-radius:10px;padding:10px" placeholder="••••">
+ ${criar?`<p class="muted" style="margin-bottom:-6px">Repita o PIN</p><input id="pin2" inputmode="numeric" type="password" maxlength="4" autocomplete="off" style="font-size:32px;letter-spacing:16px;text-align:center;width:200px;border:1px solid var(--linha);border-radius:10px;padding:10px" placeholder="••••">`:""}
+ <button class="btn" id="pinok" style="width:200px">${criar?"Criar PIN":"Entrar"}</button>
+ ${criar?"":`<button class="addnote" id="pinesq">Esqueci o PIN</button>`}</div>`;
+ const ok=async()=>{const p1=$("#pin1").value;
+  if(!/^\d{4}$/.test(p1)){toast("O PIN tem 4 números");return}
+  if(criar){if(p1!==$("#pin2").value){toast("Os PINs não conferem");return}
+   const salt=b64(crypto.getRandomValues(new Uint8Array(16)));try{localStorage.setItem(PKEY,JSON.stringify({salt,h:await hashPin(p1,salt)}))}catch(e){}
+   desbloquear();return}
+  if(Date.now()<esperaAte){toast(`Aguarde ${Math.ceil((esperaAte-Date.now())/1000)} segundos`);return}
+  if(await hashPin(p1,cfg.salt)===cfg.h){tentativas=0;desbloquear()}
+  else{tentativas++;$("#pin1").value="";if(tentativas>=5){esperaAte=Date.now()+60000*Math.pow(2,Math.min(tentativas-5,4));toast("Muitas tentativas. Aguarde para tentar de novo.")}else toast("PIN incorreto")}};
+ $("#pinok").onclick=ok;
+ app.querySelectorAll("input").forEach(x=>x.onkeydown=e=>{if(e.key==="Enter")ok()});
+ $("#pin1").focus();
+ $("#pinesq")&&($("#pinesq").onclick=()=>{if(confirm("Para criar um novo PIN, as fichas guardadas SÓ neste aparelho serão apagadas. Fichas salvas na nuvem voltam depois. Continuar?")){
+  try{localStorage.removeItem(PKEY);localStorage.removeItem(KEY);localStorage.removeItem("em-senha-envio");localStorage.removeItem(RKEY)}catch(e){}
+  DB={criancas:[]};REC={};render()}});
+}
+function desbloquear(){BLOQ=false;ultimo=Date.now();$("#lockBtn")&&($("#lockBtn").style.display="");go({tela:"home"})}
+function bloquear(){BLOQ=true;document.querySelectorAll(".modal").forEach(m=>m.remove());$("#lockBtn")&&($("#lockBtn").style.display="none");render()}
+["click","keydown","touchstart","scroll"].forEach(ev=>document.addEventListener(ev,()=>{ultimo=Date.now()},{passive:true}));
+setInterval(()=>{if(!BLOQ&&Date.now()-ultimo>10*60000)bloquear()},20000);
+let ocultoEm=0;document.addEventListener("visibilitychange",()=>{if(document.hidden)ocultoEm=Date.now();else if(!BLOQ&&ocultoEm&&Date.now()-ocultoEm>2*60000)bloquear()});
+function render(){
+ if(BLOQ)return telaPin($("#app"));
+ $("#back").style.display=view.tela==="home"?"none":"block";
+ const app=$("#app");
+ if(view.tela==="home")return home(app);
+ if(view.tela==="guia")return guia(app);
+ if(view.tela==="coord")return coord(app);
+ const c=crianca();if(!c)return go({tela:"home"});
+ if(view.tela==="ficha")return ficha(app,c);
+ if(view.tela==="relatorio")return relatorio(app,c);
+}
+
+function home(app){
+ $("#title").textContent="Registro de Observação";
+ const lista=DB.criancas.filter(c=>view.filtro==="todas"||c.turma===view.filtro).sort((a,b)=>a.nome.localeCompare(b.nome,"pt"));
+ app.innerHTML=`<div class="stack">
+ <div><p class="eyebrow">Relatório final ${new Date().getFullYear()}</p><h2>Fichas das crianças</h2><p class="muted">Marque cada item como A, EP, AP ou NO ao longo do ano. O app monta o rascunho dos três blocos do relatório.</p></div>
+ <div class="filter">${["todas",...ORDEM].map(k=>`<button class="chip ${view.filtro===k?"on":""}" data-f="${k}">${k==="todas"?"Todas":T[k].nome} <span style="opacity:.7">${k==="todas"?DB.criancas.length:DB.criancas.filter(c=>c.turma===k).length}</span></button>`).join("")}</div>
+ ${lista.length?`<div class="grid">${lista.map(c=>{const n=contar(c);return `<button class="card child" data-id="${c.id}"><div><div class="nome">${esc(c.nome)}</div><div class="muted">${T[c.turma].nome}${c.idade?" · "+esc(c.idade):""}</div></div>${barra(n)}<div class="pills"><span class="pill pA">A ${n.A}</span><span class="pill pEP">EP ${n.EP}</span><span class="pill pAP">AP ${n.AP}</span><span class="pill pNO">NO ${n.NO}</span><span class="muted" style="margin-left:auto">${n.total-n.vazio}/${n.total}</span></div></button>`}).join("")}</div>`
+ :`<div class="card empty"><p style="font-family:Newsreader,serif;font-size:22px;color:var(--pet)">Nenhuma criança cadastrada${view.filtro!=="todas"?" nesta turma":""}</p><p>Use o botão “Nova criança” para começar.</p></div>`}
+ <div class="row noprint" style="margin-top:10px">${NUVEM.coord||Object.keys(REC).length?`<button class="btn" id="coordBtn">Coordenação · ver todas as professoras</button>`:""}${DB.criancas.length?`<button class="btn" id="enviar">Enviar para a coordenação</button>`:""}<button class="btn ghost" id="exp">Exportar backup</button><button class="btn ghost" id="imp">Importar backup</button><input type="file" id="file" accept=".json" hidden></div>
+ </div><button class="btn fab noprint" id="nova">+ Nova criança</button>`;
+ app.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>go({filtro:b.dataset.f}));
+ app.querySelectorAll("[data-id]").forEach(b=>b.onclick=()=>go({tela:"ficha",id:b.dataset.id,aba:0}));
+ $("#nova").onclick=()=>modalCrianca();
+ $("#exp").onclick=exportar;
+ $("#coordBtn")&&($("#coordBtn").onclick=()=>go({tela:"coord",ext:null}));
+ $("#enviar")&&($("#enviar").onclick=enviarCoord);
+ $("#imp").onclick=()=>$("#file").click();
+ $("#file").onchange=importar;
+}
+
+function modalCrianca(c){
+ const m=document.createElement("div");m.className="modal";
+ m.innerHTML=`<div class="card"><h2 style="font-size:26px">${c?"Editar dados":"Nova criança"}</h2>
+ <div class="field"><label>Nome da criança</label><input id="mn" value="${esc(c?.nome||"")}" placeholder="Ex.: Ana Luiza"></div>
+ <div class="field"><label>Turma</label><select id="mt">${ORDEM.map(k=>`<option value="${k}" ${(c?.turma||(view.filtro!=="todas"?view.filtro:"IIM"))===k?"selected":""}>${T[k].nome} · ${T[k].sub}</option>`).join("")}</select></div>
+ <div class="field"><label>No texto do relatório, referir-se à criança como</label><select id="mp"><option value="">Pelo nome (sem pronome)</option><option value="ela">ela</option><option value="ele">ele</option></select></div>
+ <div class="field"><label>Idade em 31 de março (opcional)</label><input id="mi" value="${esc(c?.idade||"")}" placeholder="Ex.: 3 anos e 2 meses"></div>
+ <div class="field" id="mmw" style="display:none"><label>Momento na sala multietária</label><select id="mm"><option value="1">1º ano na sala (Maternal 1)</option><option value="2">Conclui o ciclo (Maternal 2)</option></select></div>
+ <div class="row" style="justify-content:space-between">${c?`<button class="btn danger" id="mdel">Excluir</button>`:"<span></span>"}<div class="row"><button class="btn sec" id="mc">Cancelar</button><button class="btn" id="ms">Salvar</button></div></div></div>`;
+ document.body.appendChild(m);
+ const syncM=()=>{$("#mmw").style.display=$("#mt").value==="IIM"?"flex":"none"};
+ $("#mt").onchange=syncM;if(c?.momento)$("#mm").value=c.momento;if(c?.pron)$("#mp").value=c.pron;syncM();
+ $("#mn").focus();
+ const fechar=()=>m.remove();
+ m.onclick=e=>{if(e.target===m)fechar()};
+ $("#mc").onclick=fechar;
+ $("#ms").onclick=()=>{const nome=$("#mn").value.trim();if(!nome){$("#mn").focus();return}
+  if(c){if(c.turma!==$("#mt").value&&Object.keys(c.marcas||{}).length&&!confirm("Mudar a turma apaga as marcações já feitas. Continuar?"))return;
+   if(c.turma!==$("#mt").value){c.marcas={};c.notas={}}c.nome=nome;c.pron=$("#mp").value;c.turma=$("#mt").value;c.idade=$("#mi").value.trim();c.momento=$("#mm").value}
+  else{const id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);DB.criancas.push({id,nome,pron:$("#mp").value,turma:$("#mt").value,idade:$("#mi").value.trim(),momento:$("#mm").value,marcas:{},notas:{},textos:{}});view.id=id;view.tela="ficha";view.aba=0}
+  save();fechar();render()};
+ if(c)$("#mdel").onclick=()=>{if(confirm(`Excluir a ficha de ${c.nome}? Esta ação não pode ser desfeita.`)){DB.criancas=DB.criancas.filter(x=>x.id!==c.id);save();fechar();go({tela:"home"})}};
+}
+
+function ficha(app,c){
+ $("#title").textContent=c.nome;
+ const t=T[c.turma],n=contar(c);
+ const campos=t.campos;
+ app.innerHTML=`<div class="stack">
+ <div class="row" style="justify-content:space-between;align-items:flex-end"><div><p class="eyebrow">${t.nome}${c.turma==="IIM"?(c.momento==="2"?" · Maternal 2":" · Maternal 1"):""}</p><h2>${esc(c.nome)}</h2><p class="muted">${t.sub}${c.idade?" · "+esc(c.idade)+" em março":""}</p></div>
+ <div class="row noprint"><button class="btn ghost" id="edit">Editar dados</button><button class="btn" id="rel">Gerar relatório →</button></div></div>
+ <div class="card stack" style="gap:8px">${barra(n)}<div class="pills"><span class="pill pA">Alcançado ${n.A}</span><span class="pill pEP">Em processo ${n.EP}</span><span class="pill pAP">A aprimorar ${n.AP}</span><span class="pill pNO">Não observado ${n.NO}</span><span class="muted" style="margin-left:auto">${n.vazio} sem marcação</span></div></div>
+ <div class="tabs noprint">${campos.map((cp,i)=>{const its=cp[1].map((_,ii)=>i+"-"+ii);const feitos=its.filter(k=>(c.marcas||{})[k]).length;return `<button data-a="${i}" class="${view.aba===i?"on":""}">${cp[0].split(",")[0]} <span class="muted">${feitos}/${its.length}</span></button>`}).join("")}</div>
+ <div class="campo"><div class="campo-h"><h3>${campos[view.aba][0]}</h3><button class="btn ghost noprint" id="todosNO" style="padding:6px 10px;font-size:13px">Marcar vazios como NO</button></div>
+ ${campos[view.aba][1].map((it,ii)=>{const k=view.aba+"-"+ii,v=(c.marcas||{})[k],nt=(c.notas||{})[k]||"";return `<div class="item"><div class="item-top"><div class="item-txt">${esc(it[0])}<div class="cod">${esc(it[1])}</div></div>
+ <div class="seg" data-k="${k}">${["A","EP","AP","NO"].map(x=>`<button data-v="${x}" class="${v===x?"on":""}" title="${LBL[x]}">${x}</button>`).join("")}</div></div>
+ ${nt||view.abrir===k?`<div class="note"><textarea data-n="${k}" placeholder="Evidência: cena, material, fala da criança entre aspas, data">${esc(nt)}</textarea></div>`:`<button class="addnote noprint" data-add="${k}">+ registrar evidência</button>`}</div>`}).join("")}
+ </div>
+ <div class="row noprint" style="justify-content:space-between">${view.aba>0?`<button class="btn sec" id="prev">← ${campos[view.aba-1][0].split(",")[0]}</button>`:"<span></span>"}${view.aba<campos.length-1?`<button class="btn sec" id="next">${campos[view.aba+1][0].split(",")[0]} →</button>`:`<button class="btn" id="rel2">Gerar relatório →</button>`}</div>
+ </div>`;
+ app.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>go({aba:+b.dataset.a}));
+ app.querySelectorAll(".seg").forEach(s=>s.querySelectorAll("button").forEach(b=>b.onclick=()=>{c.marcas=c.marcas||{};const k=s.dataset.k;c.marcas[k]=c.marcas[k]===b.dataset.v?undefined:b.dataset.v;if(!c.marcas[k])delete c.marcas[k];save();const y=window.scrollY;render();window.scrollTo(0,y)}));
+ app.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{view.abrir=b.dataset.add;const y=window.scrollY;render();window.scrollTo(0,y);const ta=document.querySelector(`[data-n="${b.dataset.add}"]`);ta&&ta.focus()});
+ app.querySelectorAll("[data-n]").forEach(ta=>ta.oninput=()=>{c.notas=c.notas||{};c.notas[ta.dataset.n]=ta.value;save()});
+ $("#todosNO").onclick=()=>{campos[view.aba][1].forEach((_,ii)=>{const k=view.aba+"-"+ii;if(!c.marcas[k])c.marcas[k]="NO"});save();render()};
+ $("#edit").onclick=()=>modalCrianca(c);
+ $("#rel").onclick=()=>go({tela:"relatorio"});
+ $("#prev")&&($("#prev").onclick=()=>go({aba:view.aba-1}));
+ $("#next")&&($("#next").onclick=()=>go({aba:view.aba+1}));
+ $("#rel2")&&($("#rel2").onclick=()=>go({tela:"relatorio"}));
+}
+
+function primeiro(nome){return nome.trim().split(/\s+/)[0]}
+function lower1(s){return s.charAt(0).toLowerCase()+s.slice(1)}
+function limpa(s){return s.replace(/\s*\([^)]*\)/g,"").trim()}
+const INF={"Separa-se da família e se reorganiza com apoio do vínculo": "separar-se da família e se reorganizar com apoio do vínculo", "Demonstra interesse pelos colegas e brinca ao lado ou junto": "demonstrar interesse pelos colegas e brincar ao lado ou junto", "Comunica vontades e sentimentos com gestos ou palavras": "comunicar vontades e sentimentos com gestos ou palavras", "Espera a vez e aguarda o material ficar livre": "esperar a vez e aguardar o material ficar livre", "Usa gestos de cortesia (por favor, obrigado, licença)": "usar gestos de cortesia", "Resolve pequenos conflitos com palavras e mediação do adulto": "resolver pequenos conflitos com palavras e mediação do adulto", "Anda, corre, sobe e desce degraus com segurança": "andar, correr, subir e descer degraus com segurança", "Carrega cadeira, bandeja e materiais com cuidado": "carregar cadeira, bandeja e materiais com cuidado", "Caminha sobre a Linha": "caminhar sobre a Linha", "Usa a pinça e transfere com colher ou pinça": "usar a pinça e transferir com colher ou pinça", "Lava as mãos, come sozinha e serve água": "lavar as mãos, comer sozinha e servir água", "Tira e coloca peças simples de roupa e calçados": "tirar e colocar peças simples de roupa e calçados", "Está em processo de desfralde (descrever sem tom de cobrança)": "estar em processo de desfralde", "Explora giz, tinta, pincel e massinha": "explorar giz, tinta, pincel e massinha", "Faz marcas gráficas com intenção": "fazer marcas gráficas com intenção", "Acompanha canções com gestos e canta trechos": "acompanhar canções com gestos e cantar trechos", "Explora sons com instrumentos e objetos": "explorar sons com instrumentos e objetos", "Compreende comandos simples do cotidiano": "compreender comandos simples do cotidiano", "Nomeia objetos e pessoas do ambiente": "nomear objetos e pessoas do ambiente", "Combina palavras em frases (2 a 4 palavras)": "combinar palavras em frases", "Faz perguntas e conta o que fez": "fazer perguntas e contar o que fez", "Manuseia livros e acompanha histórias curtas": "manusear livros e acompanhar histórias curtas", "Reconhece o próprio nome falado (e escrito, no Maternal 2)": "reconhecer o próprio nome falado", "Explora texturas, pesos e tamanhos": "explorar texturas, pesos e tamanhos", "Repete trabalhos de causa e efeito": "repetir trabalhos de causa e efeito", "Emparelha e classifica por cor ou forma": "emparelhar e classificar por cor ou forma", "Usa noções de dentro, fora, em cima, embaixo": "usar noções de dentro, fora, em cima, embaixo", "Cuida de plantas e observa a natureza": "cuidar de plantas e observar a natureza", "Antecipa os momentos da rotina": "antecipar os momentos da rotina", "Recita números em contagem oral": "recitar números em contagem oral", "Escolhe um material por iniciativa própria": "escolher um material por iniciativa própria", "Permanece no trabalho e repete": "permanecer no trabalho e repetir", "Devolve o material à estante": "devolver o material à estante", "Reconhece o lugar dos objetos e se organiza pela rotina": "reconhecer o lugar dos objetos e se organizar pela rotina", "Aprende observando os maiores (ou ajuda os menores)": "aprender observando os maiores", "Avança na lição dos três períodos (anotar em qual está)": "avançar na lição dos três períodos", "Usa cortesia espontaneamente": "usar cortesia espontaneamente", "Respeita o trabalho do colega e observa sem interferir": "respeitar o trabalho do colega e observar sem interferir", "Espera a vez com pouca mediação": "esperar a vez com pouca mediação", "Expressa sentimentos e necessidades com palavras": "expressar sentimentos e necessidades com palavras", "Resolve conflitos com palavras (“eu estava usando”)": "resolver conflitos com palavras", "Participa de combinados e brincadeiras com os colegas": "participar de combinados e brincadeiras com os colegas", "Realiza sequências completas de Vida Prática (lavar a mesa, varrer)": "realizar sequências completas de Vida Prática", "Abotoa e fecha velcro e zíper nas próprias roupas": "abotoar e fechar velcro e zíper nas próprias roupas", "Carrega materiais grandes com controle": "carregar materiais grandes com controle", "Corta banana, serve-se e cuida de si com autonomia": "cortar banana, servir-se e cuidar de si com autonomia", "Usa a pinça com precisão": "usar a pinça com precisão", "Coordena movimentos amplos (correr, pular, equilibrar-se na Linha)": "coordenar movimentos amplos", "Desenha com intenção e nomeia o que fez": "desenhar com intenção e nomear o que fez", "Escolhe e nomeia cores": "escolher e nomear cores", "Acompanha ritmos com instrumentos": "acompanhar ritmos com instrumentos", "Canta canções do grupo": "cantar canções do grupo", "Usa frases de quatro ou mais palavras": "usar frases de quatro ou mais palavras", "Reconta acontecimentos com sequência": "recontar acontecimentos com sequência", "Faz perguntas (“por quê?”) e participa de conversas": "fazer perguntas e participar de conversas", "Usa vocabulário de comparação (maior, mais fino, mais escuro)": "usar vocabulário de comparação", "Percebe o som inicial em brincadeiras orais (“Eu vejo”)": "perceber o som inicial em brincadeiras orais", "Reconhece o próprio nome escrito": "reconhecer o próprio nome escrito", "Ordena objetos por tamanho e espessura": "ordenar objetos por tamanho e espessura", "Constrói sequências do maior para o menor": "construir sequências do maior para o menor", "Emparelha e nomeia cores": "emparelhar e nomear cores", "Classifica por mais de um atributo": "classificar por mais de um atributo", "Conta até 5 com correspondência termo a termo": "contar até 5 com correspondência termo a termo", "Observa plantas, animais e transformações (água, terra)": "observar plantas, animais e transformações", "Concentra-se de 10 a 20 minutos em um trabalho escolhido": "concentrar-se de 10 a 20 minutos em um trabalho escolhido", "Percebe e corrige o próprio erro pelo material": "perceber e corrigir o próprio erro pelo material", "Repete com propósito": "repetir com propósito", "Mostra-se calma e disponível após o trabalho": "mostrar-se calma e disponível após o trabalho", "Avança na lição dos três períodos com o vocabulário sensorial": "avançar na lição dos três períodos com o vocabulário sensorial", "Demonstra empatia e cuidado com os colegas": "demonstrar empatia e cuidado com os colegas", "Age com confiança e autonomia nas escolhas": "agir com confiança e autonomia nas escolhas", "Coopera em dupla ou pequeno grupo": "cooperar em dupla ou pequeno grupo", "Comunica ideias e sentimentos com clareza": "comunicar ideias e sentimentos com clareza", "Respeita combinados e o trabalho alheio": "respeitar combinados e o trabalho alheio", "Resolve conflitos com palavras e pouca mediação": "resolver conflitos com palavras e pouca mediação", "Controla o movimento em atividades que exigem precisão": "controlar o movimento em atividades que exigem precisão", "Realiza sequências longas de Vida Prática": "realizar sequências longas de Vida Prática", "Amarra e abotoa com autonomia": "amarrar e abotoar com autonomia", "Segura o lápis em pinça (três dedos)": "segurar o lápis em pinça", "Contorna e preenche formas com traço controlado": "contornar e preencher formas com traço controlado", "Recorta com tesoura linhas retas e curvas": "recortar com tesoura linhas retas e curvas", "Desenha figura humana com várias partes": "desenhar figura humana com várias partes", "Cria produções artísticas com diferentes materiais": "criar produções artísticas com diferentes materiais", "Reconhece e reproduz ritmos e sons": "reconhecer e reproduzir ritmos e sons", "Participa de dramatizações e brincadeiras cantadas": "participar de dramatizações e brincadeiras cantadas", "Identifica som inicial e final das palavras": "identificar som inicial e final das palavras", "Percebe rimas": "perceber rimas", "Associa som e símbolo das letras (anotar quais)": "associar som e símbolo das letras", "Reconta histórias com início, meio e fim": "recontar histórias com início, meio e fim", "Escreve o próprio nome": "escrever o próprio nome", "Forma palavras a partir dos sons, com letras soltas": "formar palavras a partir dos sons, com letras soltas", "Associa quantidade e símbolo até 10": "associar quantidade e símbolo até 10", "Compreende a ideia de zero": "compreender a ideia de zero", "Faz correspondência termo a termo e compara quantidades": "fazer correspondência termo a termo e comparar quantidades", "Combina materiais sensoriais em várias dimensões": "combinar materiais sensoriais em várias dimensões", "Explora o globo terrestre, as partes da planta e os animais": "explorar o globo terrestre, as partes da planta e os animais", "Situa acontecimentos no tempo (ontem, hoje, amanhã)": "situar acontecimentos no tempo", "Concentra-se de 20 a 30 minutos": "concentrar-se de 20 a 30 minutos", "Escolhe trabalhos desafiadores, e não só os conhecidos": "escolher trabalhos desafiadores, e não só os conhecidos", "Corrige-se pelo controle do erro": "corrigir-se pelo controle do erro", "Ajuda os menores e apresenta materiais a eles": "ajudar os menores e apresentar materiais a eles", "Assume responsabilidades no grupo (cuidar da sala, ajudar os menores)": "assumir responsabilidades no grupo", "Coopera e negocia em trabalhos de grupo": "cooperar e negociar em trabalhos de grupo", "Expressa opiniões e respeita pontos de vista diferentes": "expressar opiniões e respeitar pontos de vista diferentes", "Resolve conflitos com autonomia": "resolver conflitos com autonomia", "Lida com frustrações e desafios com persistência": "lidar com frustrações e desafios com persistência", "Traça letras e números com controle": "traçar letras e números com controle", "Escreve respeitando a linha e o espaço da folha": "escrever respeitando a linha e o espaço da folha", "Usa tesoura, cola e materiais de arte com precisão": "usar tesoura, cola e materiais de arte com precisão", "Coordena movimentos amplos em jogos com regras": "coordenar movimentos amplos em jogos com regras", "Cuida de si e dos pertences com autonomia": "cuidar de si e dos pertences com autonomia", "Produz desenhos com detalhes e narrativa": "produzir desenhos com detalhes e narrativa", "Cria e reproduz sequências rítmicas": "criar e reproduzir sequências rítmicas", "Aprecia e comenta obras de arte e músicas": "apreciar e comentar obras de arte e músicas", "Associa som e símbolo de todas as letras": "associar som e símbolo de todas as letras", "Compõe palavras e frases a partir dos sons": "compor palavras e frases a partir dos sons", "Lê palavras fonéticas simples e cartões de leitura": "ler palavras fonéticas simples e cartões de leitura", "Escreve palavras e pequenas frases com escrita espontânea": "escrever palavras e pequenas frases com escrita espontânea", "Reconta e cria histórias com coerência": "recontar e criar histórias com coerência", "Avança na hipótese de escrita (anotar em qual está)": "avançar na hipótese de escrita", "Reconhece quantidades e numerais além de 10": "reconhecer quantidades e numerais além de 10", "Compreende o sistema de numeração decimal com material concreto": "compreender o sistema de numeração decimal com material concreto", "Realiza adições simples com material concreto": "realizar adições simples com material concreto", "Registra quantidades e compara medidas": "registrar quantidades e comparar medidas", "Formula perguntas e hipóteses sobre a natureza e o mundo": "formular perguntas e hipóteses sobre a natureza e o mundo", "Usa o calendário, os dias da semana e os meses": "usar o calendário, os dias da semana e os meses", "Concentra-se por longos períodos e conclui o que inicia": "concentrar-se por longos períodos e concluir o que inicia", "Planeja o próprio trabalho do dia": "planejar o próprio trabalho do dia", "É referência para os menores e apresenta materiais": "ser referência para os menores e apresentar materiais", "Passa do concreto para o registro": "passar do concreto para o registro", "Mostra disciplina interior e cuidado com o ambiente": "mostrar disciplina interior e cuidado com o ambiente", "Reconhece e nomeia as letras do alfabeto": "reconhecer e nomear as letras do alfabeto", "Segmenta palavras oralmente em sílabas": "segmentar palavras oralmente em sílabas", "Relaciona fonemas e letras": "relacionar fonemas e letras", "Escreve palavras e frases de forma espontânea ou ditada": "escrever palavras e frases de forma espontânea ou ditada", "Separa as palavras com espaços na escrita": "separar as palavras com espaços na escrita", "Conhece letra de imprensa e cursiva, maiúscula e minúscula": "conhecer letra de imprensa e cursiva, maiúscula e minúscula", "Lê palavras e pequenos textos com autonomia crescente": "ler palavras e pequenos textos com autonomia crescente", "Expressa-se oralmente com clareza e reconta histórias": "expressar-se oralmente com clareza e recontar histórias", "Conta objetos até 100 e compara quantidades": "contar objetos até 100 e comparar quantidades", "Compõe e decompõe números em dezenas e unidades": "compor e decompor números em dezenas e unidades", "Constrói fatos básicos da adição": "construir fatos básicos da adição", "Resolve problemas simples de adição e subtração": "resolver problemas simples de adição e subtração", "Reconhece sequências e padrões": "reconhecer sequências e padrões", "Reconhece figuras geométricas planas e espaciais": "reconhecer figuras geométricas planas e espaciais", "Compara medidas e usa o calendário": "comparar medidas e usar o calendário", "Reconhece cédulas e moedas": "reconhecer cédulas e moedas", "Lê tabelas e gráficos simples": "ler tabelas e gráficos simples", "Identifica partes do corpo e hábitos de cuidado e higiene": "identificar partes do corpo e hábitos de cuidado e higiene", "Observa materiais, seres vivos e ciclos (dia e noite)": "observar materiais, seres vivos e ciclos", "Reconhece a própria história e a da família": "reconhecer a própria história e a da família", "Descreve os lugares de vivência (casa, escola, bairro)": "descrever os lugares de vivência", "Faz perguntas e pesquisa a partir das Grandes Lições": "fazer perguntas e pesquisar a partir das Grandes Lições", "Cria e comenta produções visuais, musicais e cênicas": "criar e comentar produções visuais, musicais e cênicas", "Participa de brincadeiras e jogos respeitando regras": "participar de brincadeiras e jogos respeitando regras", "Organiza o próprio trabalho e conclui o que inicia": "organizar o próprio trabalho e concluir o que inicia", "Usa registros (caderno, planejamento) com autonomia": "usar registros com autonomia", "Trabalha em grupo, negocia e respeita diferenças": "trabalhar em grupo, negociar e respeitar diferenças", "Lida com o erro como parte da aprendizagem": "lidar com o erro como parte da aprendizagem", "Demonstra curiosidade, imaginação e senso de justiça": "demonstrar curiosidade, imaginação e senso de justiça"};
+const ABERT={"O eu, o outro e o nós":["Na convivência com os colegas","Nas relações com o grupo"],"Corpo, gestos e movimentos":["No cuidado de si e nos movimentos","Nas atividades com o corpo e de vida prática"],"Traços, sons, cores e formas":["Nas artes e na música","Nas experiências artísticas"],"Escuta, fala, pensamento e imaginação":["Na linguagem","Na comunicação e na linguagem"],"Espaços, tempos, quantidades, relações e transformações":["Nas descobertas sobre quantidades, formas e natureza","No raciocínio e nas descobertas sobre o mundo"],"Olhar montessoriano":["Em relação à concentração e à autonomia","Na forma de se dedicar às atividades"],"Língua Portuguesa":["Em Língua Portuguesa","Na leitura e na escrita"],"Matemática":["Em Matemática","No raciocínio matemático"],"Ciências, História e Geografia":["Nas descobertas sobre o mundo","Em Ciências, História e Geografia"],"Arte e Educação Física":["Em Arte e Educação Física","Nas artes e nos jogos"],"Socioemocional e olhar montessoriano":["Na organização do trabalho e na vida em grupo","Na convivência e na autonomia"]};
+function lista(a){return a.length<2?(a[0]||""):a.slice(0,-1).join(", ")+" e "+a[a.length-1]}
+function genero(c,t){if(c.pron==="ele")t=t.replace(/\bcalma\b/g,"calmo").replace(/\bsozinha\b/g,"sozinho");return t}
+function frasePres(c,txt){return genero(c,lower1(limpa(txt)))}
+function fraseInf(c,txt){return genero(c,INF[txt]||lower1(limpa(txt)))}
+function cap(t){return t.charAt(0).toUpperCase()+t.slice(1)}
+function nota(c,its){const n=its.map(i=>((c.notas||{})[i.k]||"").trim()).filter(Boolean).map(x=>cap(x).replace(/([^.!?…”"])$/,"$1."));return n.length?" "+n.join(" "):""}
+function porCampo(c,v){const g=[];itens(c.turma).forEach(i=>{if((c.marcas||{})[i.k]!==v)return;let x=g.find(y=>y.campo===i.campo);if(!x){x={campo:i.campo,its:[]};g.push(x)}x.its.push(i)});return g}
+function listaPres(c,its){const a=its.map(x=>frasePres(c,x.txt));if(a.length<2)return a[0]||"";
+ if(a.slice(0,-1).some(x=>/ e /.test(x)))return a.slice(0,-1).join(", ")+", além de "+fraseInf(c,its[its.length-1].txt);
+ return lista(a)}
+function listaInf(c,its){const a=its.map(x=>fraseInf(c,x.txt));if(a.length<2)return a[0]||"";
+ if(a.slice(0,-1).some(x=>/ e /.test(x)))return a.slice(0,-1).join(", ")+", bem como "+a[a.length-1];
+ return lista(a)}
+function partes(a,n){const r=[];for(let i=0;i<a.length;i+=n)r.push(a.slice(i,i+n));return r}
+function rascunho(c,v){
+ const nome=primeiro(c.nome),pron=c.pron==="ele"?"ele":c.pron==="ela"?"ela":"a criança";
+ const suj=i=>i%2===0?nome:pron;
+ const grupos=porCampo(c,v);if(!grupos.length)return "";
+ const ab=(cp,k)=>(ABERT[cp]||[cp])[k%((ABERT[cp]||[cp]).length)];
+ const t=[];
+ if(v==="A"){
+  t.push(`Ao longo do ano, ${nome} viveu conquistas importantes em seu percurso.`);
+  const lig=[x=>`${cap(x)} também`,x=>`Além disso, ${x}`,x=>`Da mesma forma, ${x}`];
+  grupos.forEach((g,i)=>{const ps=partes(g.its,3);
+   let f=`${ab(g.campo,0)}, ${suj(i)} ${listaPres(c,ps[0])}.`;
+   ps.slice(1).forEach((p,j)=>{f+=` ${lig[(i+j)%lig.length](j%2===0?(i%2===0?pron:nome):suj(i))} ${listaPres(c,p)}.`});
+   t.push(f+nota(c,g.its))});
+  t.push(`São conquistas que revelam ${nome==="a criança"?"uma criança":"uma criança"} cada vez mais segura e autônoma em seu desenvolvimento.`);
+ }
+ if(v==="EP"){
+  t.push(`Algumas aprendizagens importantes estão em pleno desenvolvimento.`);
+  const caudas=[", ainda com o apoio do adulto em alguns momentos",", em situações que vêm se tornando cada vez mais frequentes",", e segue avançando com a mediação da professora"];
+  grupos.forEach((g,i)=>{const ps=partes(g.its,3);
+   let f=`${ab(g.campo,1)}, ${suj(i)} já ${listaPres(c,ps[0])}${caudas[i%3]}.`;
+   ps.slice(1).forEach(p=>{f+=` Começa também a ${listaInf(c,p)}.`});
+   t.push(f+nota(c,g.its))});
+  t.push(`Seguiremos oferecendo oportunidades para que essas aprendizagens se consolidem.`);
+ }
+ if(v==="AP"){
+  const prox=T[c.turma].proxima;
+  t.push(`Para a próxima etapa (${prox}), alguns aspectos merecem atenção especial no percurso de ${nome}.`);
+  const mod=[(o,x)=>`${o}, será importante incentivar ${nome} a ${x}.`,(o,x)=>`${o}, convém oferecer situações frequentes e intencionais para que ${pron==="a criança"?"a criança":nome} possa ${x}.`,(o,x)=>`${o}, ${pron} se beneficiará de propostas que ${c.pron==="ele"?"o":"a"} ajudem a ${x}.`];
+  grupos.forEach((g,i)=>{const ps=partes(g.its,3);let f=mod[i%3](ab(g.campo,i%2),listaInf(c,ps[0]));
+   const obj=c.pron==="ele"?"apoiá-lo":c.pron==="ela"?"apoiá-la":"apoiar "+nome;ps.slice(1).forEach(p=>{f+=` Vale ainda ${obj} a ${listaInf(c,p)}.`});
+   t.push(f+nota(c,g.its))});
+  t.push(`Em casa, a família pode apoiar esse caminho oferecendo tempo, oportunidades reais de participação e escuta atenta.`);
+ }
+ return t.join(" ");
+}
+
+function relatorio(app,c){
+ $("#title").textContent="Relatório · "+c.nome;
+ const ro=!!view.ext;const t=T[c.turma],n=contar(c);c.textos=c.textos||{};
+ const blocos=[["A","Conquistas consolidadas","o que foi alcançado com sucesso","var(--A)"],["EP","Aprendizagens em processo","o que ainda está se construindo","var(--EP)"],["AP",`Aspectos a aprimorar na próxima etapa (${t.proxima})`,"o que a próxima professora e a família devem apoiar","var(--AP)"]];
+ app.innerHTML=`<div class="stack">
+ <div><p class="eyebrow">Percurso individual da criança</p><h2>${esc(c.nome)}</h2><p class="muted">${t.nome} · ${t.sub}</p></div>
+ ${n.vazio?`<div class="card noprint" style="background:#f9eeda;border-color:#e8d5a8"><b>${n.vazio} itens ainda sem marcação.</b> O rascunho considera apenas os itens marcados.</div>`:""}
+ <div class="card noprint muted">O app monta um <b>rascunho</b> a partir das marcações e das evidências registradas. Reescreva com a voz da criança: inclua falas entre aspas, cenas concretas e retire o que soar genérico. Os códigos da BNCC não entram no texto da família.</div>
+ ${blocos.map(([v,tit,sub,cor])=>{const its=itens(c.turma).filter(i=>(c.marcas||{})[i.k]===v);const txt=c.textos[v]??rascunho(c,v);return `<div class="bloco" style="border-color:${cor}">
+ <div class="row" style="justify-content:space-between"><div><h3>${tit}</h3><p class="muted">${sub} · ${its.length} ${its.length===1?"item":"itens"}</p></div>
+ <div class="row noprint"><button class="btn ghost" data-re="${v}" style="padding:6px 10px;font-size:13px">Refazer rascunho</button><button class="btn sec" data-cp="${v}" style="padding:6px 10px;font-size:13px">Copiar</button></div></div>
+ ${its.length?`<details class="noprint"><summary class="muted" style="cursor:pointer">Ver itens marcados</summary><table class="g" style="margin-top:8px"><tr><th>Item</th><th>BNCC</th><th>Evidência</th></tr>${its.map(i=>`<tr><td>${esc(i.txt)}</td><td>${esc(i.cod)}</td><td>${esc((c.notas||{})[i.k]||"—")}</td></tr>`).join("")}</table></details>`:""}
+ <textarea data-t="${v}" ${ro?"readonly":""} placeholder="Nenhum item marcado com ${v}. Escreva aqui, se necessário.">${esc(txt)}</textarea></div>`}).join("")}
+ <div class="row noprint"><button class="btn sec" id="voltar">${ro?"← Voltar à coordenação":"← Voltar à ficha"}</button><button class="btn sec" id="cpall">Copiar os três blocos</button><button class="btn" id="print">Imprimir</button></div>
+ </div>`;
+ const fit=ta=>{ta.style.height="auto";ta.style.height=Math.max(170,ta.scrollHeight+4)+"px"};
+ app.querySelectorAll("[data-t]").forEach(ta=>{requestAnimationFrame(()=>fit(ta));ta.oninput=()=>{if(ro)return;c.textos[ta.dataset.t]=ta.value;save();fit(ta)}});
+ if(ro)app.querySelectorAll("[data-re]").forEach(b=>b.style.display="none");
+ app.querySelectorAll("[data-re]").forEach(b=>b.onclick=()=>{if(c.textos[b.dataset.re]!==undefined&&!confirm("Substituir o texto editado por um novo rascunho?"))return;delete c.textos[b.dataset.re];save();render()});
+ const copiar=s=>{(navigator.clipboard?navigator.clipboard.writeText(s):Promise.reject()).then(()=>toast("Copiado")).catch(()=>{const ta=document.createElement("textarea");ta.value=s;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Copiado")}catch(e){toast("Selecione e copie manualmente")}ta.remove()})};
+ app.querySelectorAll("[data-cp]").forEach(b=>b.onclick=()=>copiar(document.querySelector(`[data-t="${b.dataset.cp}"]`).value));
+ $("#cpall").onclick=()=>copiar(blocos.map(([v,tit])=>tit+"\n"+document.querySelector(`[data-t="${v}"]`).value).join("\n\n"));
+ $("#voltar").onclick=()=>ro?go({tela:"coord",ext:null}):go({tela:"ficha"});
+ $("#print").onclick=()=>window.print();
+}
+
+function guia(app){
+ $("#title").textContent="Guia de registro";
+ app.innerHTML=`<div class="stack">
+ <div><p class="eyebrow">Como usar</p><h2>Do registro diário ao relatório final</h2></div>
+ <div class="legend">
+ <div style="border-color:var(--A)"><b>A · Alcançado</b><br>Faz com autonomia, em situações diferentes, mais de uma vez. Vai para <i>Conquistas consolidadas</i>.</div>
+ <div style="border-color:var(--EP)"><b>EP · Em processo</b><br>Faz com apoio, às vezes, ou só em uma situação. Vai para <i>Aprendizagens em processo</i>.</div>
+ <div style="border-color:var(--AP)"><b>AP · A aprimorar</b><br>Ainda não aparece ou precisa de investimento intencional. Vai para <i>Aspectos a aprimorar</i>.</div>
+ <div style="border-color:var(--NO)"><b>NO · Não observado</b><br>Não houve oportunidade suficiente. Não entra no relatório; observar antes de dezembro.</div></div>
+ <div class="card stack" style="gap:8px"><h3>Rotina sugerida</h3>
+ <p><b>Toda semana:</b> registrar 2 ou 3 evidências curtas por criança (o que fez, com qual material, o que disse entre aspas).</p>
+ <p><b>A cada bimestre:</b> revisar as marcações a partir das evidências, e não de memória.</p>
+ <p><b>Em novembro:</b> só manter A quando houver ao menos duas evidências.</p>
+ <p><b>Em dezembro:</b> gerar o relatório, reescrever o rascunho com a voz da criança e pedir a revisão de outra pessoa da equipe.</p></div>
+ <div class="card stack" style="gap:8px"><h3>Cada frase do relatório tem quatro partes</h3>
+ <table class="g"><tr><th>Parte</th><th>Pergunta</th><th>Exemplo</th></tr>
+ <tr><td>Conquista ou processo</td><td>O que a criança faz hoje?</td><td>“Maria ordena os objetos do maior para o menor…”</td></tr>
+ <tr><td>Evidência</td><td>Em que situação, com qual material?</td><td>“…e, quando uma peça fica fora do lugar, percebe e corrige sozinha.”</td></tr>
+ <tr><td>Significado</td><td>O que isso revela?</td><td>“Mostra atenção crescente aos detalhes e uma relação tranquila com o erro.”</td></tr>
+ <tr><td>Próximo passo</td><td>O que será oferecido? (EP e AP)</td><td>“Seguiremos com propostas de comparar e ordenar em várias dimensões.”</td></tr></table></div>
+ <div class="card stack" style="gap:6px"><h3>Antes de entregar</h3>
+ <p>☐ Cada frase tem uma evidência concreta</p><p>☐ Nenhum código da BNCC no texto da família</p><p>☐ Nenhum rótulo (“é tímida”, “é agitado”) e nenhuma comparação com colegas</p><p>☐ O bloco a aprimorar aponta o que será oferecido</p><p>☐ O texto soa como a criança, e não como um modelo</p><p>☐ Revisado por outra pessoa da equipe</p></div>
+ <div class="card stack" style="gap:6px"><h3>Enviar para a coordenação</h3><p>Na tela inicial, toque em <b>Enviar para a coordenação</b>, informe seu nome e a <b>senha de envio</b> combinada com a coordenação, e gere o arquivo protegido. Sem essa senha, o arquivo não abre. Depois, envie o arquivo (começa com <b>fichas-</b>) por WhatsApp ou e-mail. Envie de novo sempre que atualizar as fichas: a coordenação fica com a versão mais recente.</p></div>
+ <div class="row"><button class="btn ghost" id="areaCoord">Área da coordenação (receber arquivos)</button></div>
+ <div class="card muted">Quando aparece “☁ Salvo na nuvem” no topo, as fichas ficam na sua conta e abrem em qualquer aparelho. Quando aparece “Salvo neste aparelho”, ficam só neste navegador: use “Exportar backup” com frequência para não perder nada.</div>
+ </div>`;
+ $("#areaCoord").onclick=()=>go({tela:"coord",ext:null});
+}
+
+function salvarArquivo(filename,data){return (async()=>{
+ try{const dl=window.claude&&window.claude.use?await window.claude.use("downloads"):null;
+  if(dl){await dl.save({filename,data});return true}}catch(e){return false}
+ try{const blob=new Blob([data],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();a.remove();return true}catch(e){return false}})()}
+function slug(t){return (t||"professora").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60)||"professora"}
+// ---------- criptografia ----------
+const b64=buf=>{let s="";const a=new Uint8Array(buf);for(let i=0;i<a.length;i+=8192)s+=String.fromCharCode.apply(null,a.subarray(i,i+8192));return btoa(s)};
+const unb64=t=>Uint8Array.from(atob(t),c=>c.charCodeAt(0));
+async function chave(senha,salt,iter){const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(senha),"PBKDF2",false,["deriveKey"]);
+ return crypto.subtle.deriveKey({name:"PBKDF2",salt,iterations:iter,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])}
+async function cifrar(obj,senha){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),iter=310000;
+ const k=await chave(senha,salt,iter);const ct=await crypto.subtle.encrypt({name:"AES-GCM",iv},k,new TextEncoder().encode(JSON.stringify(obj)));
+ return {tipo:"envio-coordenacao-protegido",versao:2,kdf:"PBKDF2-SHA256",iter,salt:b64(salt),iv:b64(iv),dados:b64(ct)}}
+async function decifrar(env,senha){const k=await chave(senha,unb64(env.salt),env.iter||310000);
+ const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:unb64(env.iv)},k,unb64(env.dados));return JSON.parse(new TextDecoder().decode(pt))}
+async function hashPin(pin,salt){const d=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(salt+":"+pin));return b64(d)}
+
+function enviarCoord(){
+ let nome="",lemb="";try{nome=localStorage.getItem("em-professora")||"";lemb=localStorage.getItem("em-senha-envio")||""}catch(e){}
+ const m=document.createElement("div");m.className="modal";
+ m.innerHTML=`<div class="card"><h2 style="font-size:26px">Enviar para a coordenação</h2>
+ <p class="muted">O app gera um arquivo <b>protegido por senha</b> com as ${DB.criancas.length} fichas deste aparelho. Sem a senha de envio, ninguém consegue abrir o arquivo, mesmo que ele seja encaminhado por engano.</p>
+ <div class="field"><label>Seu nome</label><input id="pn" placeholder="Ex.: Professora Júlia" autocomplete="off"></div>
+ <div class="field"><label>Senha de envio (combinada com a coordenação)</label><input id="ps" type="password" autocomplete="off"></div>
+ <div class="field" id="ps2w"><label>Confirme a senha de envio</label><input id="ps2" type="password" autocomplete="off"></div>
+ <label class="row muted" style="gap:8px"><input type="checkbox" id="pl"> Lembrar a senha neste aparelho</label>
+ <div class="row" style="justify-content:flex-end"><button class="btn sec" id="pc">Cancelar</button><button class="btn" id="pg">Gerar arquivo protegido</button></div></div>`;
+ document.body.appendChild(m);$("#pn").value=nome;
+ if(lemb){$("#ps").value=lemb;$("#ps2").value=lemb;$("#ps2w").style.display="none";$("#pl").checked=true}
+ (nome?$("#ps"):$("#pn")).focus();
+ const fechar=()=>m.remove();m.onclick=e=>{if(e.target===m)fechar()};$("#pc").onclick=fechar;
+ $("#pg").onclick=async()=>{const n=$("#pn").value.trim(),sh=$("#ps").value;
+  if(!n){$("#pn").focus();return}
+  if(sh.length<8){toast("A senha de envio precisa ter pelo menos 8 caracteres");$("#ps").focus();return}
+  if(sh!==$("#ps2").value){toast("As senhas não conferem");$("#ps2").focus();return}
+  try{localStorage.setItem("em-professora",n);if($("#pl").checked)localStorage.setItem("em-senha-envio",sh);else localStorage.removeItem("em-senha-envio")}catch(e){}
+  $("#pg").textContent="Protegendo…";$("#pg").disabled=true;
+  try{const d=new Date();const env=await cifrar({professora:n,enviado:d.toISOString(),criancas:DB.criancas},sh);
+   const ok=await salvarArquivo(`fichas-${slug(n)}-${d.toISOString().slice(0,10)}.json`,JSON.stringify(env));
+   fechar();if(ok)alertaEnvio();else toast("Não foi possível gerar o arquivo neste aparelho")}
+  catch(e){fechar();toast("Este navegador não permite gerar o arquivo protegido")}};
+}
+function alertaEnvio(){const m=document.createElement("div");m.className="modal";
+ m.innerHTML=`<div class="card"><h2 style="font-size:26px">Arquivo gerado</h2><p>O arquivo foi salvo na pasta de downloads do aparelho. Agora:</p>
+ <p><b>1.</b> Abra o WhatsApp ou o e-mail.<br><b>2.</b> Anexe o arquivo que começa com <b>fichas-</b> (pasta Downloads ou Arquivos).<br><b>3.</b> Envie para a coordenação.</p>
+ <p class="muted">Você pode enviar de novo sempre que atualizar as fichas: a coordenação recebe a versão mais recente.</p>
+ <div class="row" style="justify-content:flex-end"><button class="btn" id="ok">Entendi</button></div></div>`;
+ document.body.appendChild(m);$("#ok").onclick=()=>m.remove()}
+const RKEY="em-recebidas-v1";
+let REC={};try{REC=JSON.parse(localStorage.getItem(RKEY)||"{}")}catch(e){}
+function salvarRec(){try{localStorage.setItem(RKEY,JSON.stringify(REC))}catch(e){}}
+let SENHA_REC="";
+function pedirSenha(msg){return new Promise(res=>{const m=document.createElement("div");m.className="modal";
+ m.innerHTML=`<div class="card"><h2 style="font-size:26px">Senha de envio</h2><p class="muted"></p><div class="field"><label>Senha</label><input id="sr" type="password" autocomplete="off"></div><div class="row" style="justify-content:flex-end"><button class="btn sec" id="src">Cancelar</button><button class="btn" id="sro">Abrir</button></div></div>`;
+ m.querySelector("p").textContent=msg;document.body.appendChild(m);$("#sr").focus();
+ const fim=v=>{m.remove();res(v)};$("#src").onclick=()=>fim(null);$("#sro").onclick=()=>fim($("#sr").value);$("#sr").onkeydown=e=>{if(e.key==="Enter")fim($("#sr").value)}})}
+async function receberArquivos(files){
+ let ok=0,erro=0,senhaErr=0;
+ for(const f of files){let d;try{d=JSON.parse(await f.text())}catch(e){erro++;continue}
+  try{
+   if(d.tipo==="envio-coordenacao-protegido"){
+    let aberto=null;
+    if(SENHA_REC){try{aberto=await decifrar(d,SENHA_REC)}catch(e){}}
+    while(!aberto){const sh=await pedirSenha(`Digite a senha de envio para abrir “${f.name}”.`);if(sh===null)break;
+     try{aberto=await decifrar(d,sh);SENHA_REC=sh}catch(e){toast("Senha incorreta")}}
+    if(!aberto){senhaErr++;continue}
+    d={tipo:"envio-coordenacao",...aberto};
+   }
+   if(d.tipo!=="envio-coordenacao"||!Array.isArray(d.criancas))throw 0;
+   const id=slug(d.professora);const atual=REC[id];
+   if(atual&&atual.enviado>d.enviado){ok++;continue}
+   REC[id]={professora:d.professora,enviado:d.enviado,criancas:d.criancas.filter(c=>c&&T[c.turma])};
+   if(NUVEM.db&&NUVEM.coord){try{await NUVEM.db.doc("recebidas/"+id).set(JSON.parse(JSON.stringify(REC[id])))}catch(e){}}
+   ok++}catch(e){erro++}}
+ salvarRec();
+ toast(ok?`${ok} arquivo(s) recebido(s)${erro+senhaErr?` · ${erro+senhaErr} não aberto(s)`:""}`:(senhaErr?"Arquivo não aberto: senha não informada":"Arquivo inválido: use o arquivo gerado em “Enviar para a coordenação”"));
+ if(view.tela==="coord")coord($("#app"));
+}
+async function coord(app){
+ $("#title").textContent="Coordenação";
+ app.innerHTML=`<div class="stack"><div><p class="eyebrow">Visão da coordenação</p><h2>Fichas de todas as professoras</h2><p class="muted">Somente leitura. Aqui aparecem as fichas salvas na nuvem e os arquivos enviados pelas professoras. Os arquivos chegam protegidos pela senha de envio que você combinou com a equipe (mínimo de 8 caracteres).</p></div><div class="row noprint"><button class="btn" id="rcb">Receber arquivo de professora</button><input type="file" id="rcf" accept=".json,application/json" multiple hidden></div><div class="card empty" id="cl">Carregando…</div></div>`;
+ $("#rcb").onclick=()=>$("#rcf").click();$("#rcf").onchange=e=>{receberArquivos([...e.target.files]);e.target.value=""};
+ const fontes=[];let aviso="";
+ if(NUVEM.db&&NUVEM.coord){
+  try{const snap=await comTempo(NUVEM.db.collection("professoras").get(),10000);const docs=snap.docs.filter(d=>d.exists);
+   const ps=docs.length?await NUVEM.user.profiles(docs.map(d=>d.id)):{};
+   docs.forEach(d=>fontes.push({titulo:(ps[d.id]&&ps[d.id].name||"Professora")+(ps[d.id]&&ps[d.id].isMe?" (você)":""),sub:"salvo na nuvem",criancas:(d.data()||{}).criancas||[]}))}catch(e){aviso="Não foi possível carregar as fichas da nuvem agora."}
+  try{const snap=await comTempo(NUVEM.db.collection("recebidas").get(),10000);snap.docs.filter(d=>d.exists).forEach(d=>{const r=d.data();const loc=REC[d.id];if(!loc||loc.enviado<r.enviado)REC[d.id]=JSON.parse(JSON.stringify(r))});salvarRec()}catch(e){}
+ }
+ Object.values(REC).forEach(r=>fontes.push({titulo:r.professora,sub:"arquivo recebido em "+new Date(r.enviado).toLocaleDateString("pt-BR")+" às "+new Date(r.enviado).toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}),criancas:r.criancas||[],rid:slug(r.professora)}));
+ if(view.tela!=="coord")return;
+ const filtro=view.cf||"todas";
+ const box=document.createElement("div");box.className="stack";
+ const chips=document.createElement("div");chips.className="filter";
+ ["todas",...ORDEM].forEach(k=>{const b=document.createElement("button");b.className="chip"+(filtro===k?" on":"");b.textContent=k==="todas"?"Todas as turmas":T[k].nome;b.onclick=()=>{view.cf=k;coord(app)};chips.appendChild(b)});
+ box.appendChild(chips);
+ let total=0;
+ if(aviso){const e=document.createElement("div");e.className="card muted";e.textContent=aviso;box.appendChild(e)}
+ fontes.forEach(fo=>{const kids=(fo.criancas||[]).filter(c=>c&&T[c.turma]&&(filtro==="todas"||c.turma===filtro));if(!kids.length)return;total+=kids.length;
+  const sec=document.createElement("div");sec.className="stack";sec.style.gap="10px";
+  const hh=document.createElement("div");hh.className="row";hh.style.justifyContent="space-between";
+  const h=document.createElement("div");const h3=document.createElement("h3");h3.style.fontSize="18px";h3.textContent=fo.titulo+` · ${kids.length} ${kids.length===1?"criança":"crianças"}`;const sm=document.createElement("p");sm.className="muted";sm.textContent=fo.sub;h.appendChild(h3);h.appendChild(sm);hh.appendChild(h);
+  if(fo.rid){const rb=document.createElement("button");rb.className="btn danger noprint";rb.style.padding="6px 10px";rb.style.fontSize="13px";rb.textContent="Remover";rb.onclick=async()=>{if(!confirm(`Remover as fichas recebidas de ${fo.titulo}?`))return;delete REC[fo.rid];salvarRec();if(NUVEM.db&&NUVEM.coord){try{await NUVEM.db.doc("recebidas/"+fo.rid).delete()}catch(e){}}coord($("#app"))};hh.appendChild(rb)}
+  sec.appendChild(hh);
+  const g=document.createElement("div");g.className="grid";
+  kids.sort((a,b)=>a.nome.localeCompare(b.nome,"pt")).forEach(c=>{const n=contar(c);const b=document.createElement("button");b.className="card child";
+   b.innerHTML=`<div><div class="nome"></div><div class="muted">${T[c.turma].nome}</div></div>${barra(n)}<div class="pills"><span class="pill pA">A ${n.A}</span><span class="pill pEP">EP ${n.EP}</span><span class="pill pAP">AP ${n.AP}</span><span class="pill pNO">NO ${n.NO}</span><span class="muted" style="margin-left:auto">${n.total-n.vazio}/${n.total}</span></div>`;
+   b.querySelector(".nome").textContent=c.nome;
+   b.onclick=()=>go({tela:"relatorio",ext:JSON.parse(JSON.stringify(c))});g.appendChild(b)});
+  sec.appendChild(g);box.appendChild(sec)});
+ if(!total){const e=document.createElement("div");e.className="card empty";e.textContent=fontes.length?"Nenhuma ficha nesta turma.":"Nenhuma ficha recebida ainda. Quando uma professora enviar o arquivo, toque em “Receber arquivo de professora”.";box.appendChild(e)}
+ const cl=$("#cl");cl.replaceWith(box);
+}
+async function exportar(){
+ const filename=`registro-observacao-${new Date().toISOString().slice(0,10)}.json`,data=JSON.stringify(DB,null,1);
+ try{const dl=window.claude&&window.claude.use?await window.claude.use("downloads"):null;
+  if(dl){await dl.save({filename,data});toast("Backup exportado");return}}catch(e){toast("Exportação cancelada");return}
+ try{const blob=new Blob([data],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();a.remove();toast("Backup exportado")}catch(e){toast("Não foi possível exportar neste aparelho")}
+}
+function importar(e){
+ const f=e.target.files[0];if(!f)return;const r=new FileReader();
+ r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d.criancas))throw 0;
+  const novos=d.criancas.filter(x=>!DB.criancas.some(y=>y.id===x.id));const rep=d.criancas.length-novos.length;
+  if(rep&&confirm(`${rep} ficha(s) já existem neste aparelho. Substituir pelas do backup?`)){d.criancas.forEach(x=>{const i=DB.criancas.findIndex(y=>y.id===x.id);if(i>=0)DB.criancas[i]=x})}
+  DB.criancas.push(...novos);save();render();toast(`${d.criancas.length} ficha(s) importadas`)}catch(err){toast("Arquivo de backup inválido")}};
+ r.readAsText(f);e.target.value="";
+}
+$("#back").onclick=()=>{if(view.tela==="relatorio"&&view.ext)go({tela:"coord",ext:null});else if(view.tela==="relatorio")go({tela:"ficha"});else go({tela:"home"})};
+$("#guiaBtn").onclick=()=>{if(!BLOQ)go({tela:"guia"})};
+$("#lockBtn").onclick=bloquear;
+render();
+iniciarNuvem();
+</script>
+</body>
+</html>
